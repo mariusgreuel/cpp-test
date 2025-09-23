@@ -8,10 +8,11 @@ name: Build
 on:
   push:
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   windows:
-    runs-on: cpp
+    runs-on: windows
     strategy:
       fail-fast: false
       matrix:
@@ -44,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v3-node20
         with:
           name: build-${{ matrix.cmake-preset }}
-          path: build/${{ matrix.cmake-preset }}/
+          path: build/${{ matrix.cmake-preset }}
   linux:
     runs-on: raas-ci
     strategy:
@@ -54,6 +55,13 @@ jobs:
           - { cmake-preset: 'linux-x64-debug' }
           - { cmake-preset: 'linux-x64-release' }
     steps:
+      - name: Setup prerequisites
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Setup conan
+        run: |
+          pip3 install --user conan
       - name: Checkout
         uses: actions/checkout@v4
       - name: Configure
@@ -67,4 +75,4 @@ jobs:
         uses: actions/upload-artifact@v3-node20
         with:
           name: build-${{ matrix.cmake-preset }}
-          path: build/${{ matrix.cmake-preset }}/
+          path: build/${{ matrix.cmake-preset }}
