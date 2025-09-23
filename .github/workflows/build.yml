@@ -1,0 +1,70 @@
+#
+# build.yml - GitHub build action for CMake
+# Copyright (c) 2025 Robert Bosch GmbH. All rights reserved.
+#
+
+name: Build
+
+on:
+  push:
+  workflow_call:
+
+jobs:
+  windows:
+    runs-on: cpp
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { cmake-preset: 'windows-x64-debug' }
+          - { cmake-preset: 'windows-x64-release' }
+    steps:
+      - name: Import Secrets
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ vars.VAULT_URL }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          caCertificate: ${{ secrets.VAULT_CA_CERT }}
+          secrets: |
+            engrso/data/login github | BDC_GITHUB_TOKEN ;
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+        with:
+          msbuild-architecture: x64
+      - name: Configure
+        run: cmake --preset ${{ matrix.cmake-preset }}
+      - name: Build
+        run: cmake --build --preset ${{ matrix.cmake-preset }}
+      - name: Test
+        run: ctest --preset ${{ matrix.cmake-preset }}
+      - name: Archive build artifacts
+        if: always()
+        uses: actions/upload-artifact@v3-node20
+        with:
+          name: build-${{ matrix.cmake-preset }}
+          path: build/${{ matrix.cmake-preset }}/
+  linux:
+    runs-on: raas-ci
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { cmake-preset: 'linux-x64-debug' }
+          - { cmake-preset: 'linux-x64-release' }
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure
+        run: cmake --preset ${{ matrix.cmake-preset }}
+      - name: Build
+        run: cmake --build --preset ${{ matrix.cmake-preset }}
+      - name: Test
+        run: ctest --preset ${{ matrix.cmake-preset }}
+      - name: Archive build artifacts
+        if: always()
+        uses: actions/upload-artifact@v3-node20
+        with:
+          name: build-${{ matrix.cmake-preset }}
+          path: build/${{ matrix.cmake-preset }}/
