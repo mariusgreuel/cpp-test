@@ -12,7 +12,7 @@ on:
 
 jobs:
   windows:
-    runs-on: windows
+    runs-on: biaas_exec1218_rng-zeng11w019_cpu2_ram4
     strategy:
       fail-fast: false
       matrix:
@@ -20,14 +20,14 @@ jobs:
           - { cmake-preset: 'windows-x64-debug' }
           - { cmake-preset: 'windows-x64-release' }
     steps:
-      - name: Import Secrets
-        uses: hashicorp/vault-action@v2
-        with:
-          url: ${{ vars.VAULT_URL }}
-          token: ${{ secrets.VAULT_TOKEN }}
-          caCertificate: ${{ secrets.VAULT_CA_CERT }}
-          secrets: |
-            engrso/data/login github | BDC_GITHUB_TOKEN ;
+#      - name: Import Secrets
+#        uses: hashicorp/vault-action@v2
+#        with:
+#          url: ${{ vars.VAULT_URL }}
+#          token: ${{ secrets.VAULT_TOKEN }}
+#          caCertificate: ${{ secrets.VAULT_CA_CERT }}
+#          secrets: |
+#            engrso/data/login github | BDC_GITHUB_TOKEN ;
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup MSBuild
