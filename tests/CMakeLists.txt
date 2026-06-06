@@ -5,13 +5,13 @@
 
 find_package(GTest REQUIRED)
 
-add_executable(test_stuff
-    tests.cpp
+add_executable(stuff_tests
+    "adder_tests.cpp"
 )
 
-target_link_libraries(test_stuff PRIVATE
+target_link_libraries(stuff_tests PRIVATE
     GTest::gtest_main
     stuff
 )
 
-add_test(all test_stuff)
+add_test(all stuff_tests)

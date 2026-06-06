@@ -31,7 +31,7 @@
     },
     {
       "name": "windows-x64-debug",
-      "displayName": "x64 Debug",
+      "displayName": "windows-x64-debug",
       "inherits": "base-windows",
       "generator": "Ninja",
       "architecture": {
@@ -44,7 +44,7 @@
     },
     {
       "name": "windows-x64-release",
-      "displayName": "x64 Release",
+      "displayName": "windows-x64-release",
       "inherits": "base-windows",
       "generator": "Ninja",
       "architecture": {
@@ -57,7 +57,7 @@
     },
     {
       "name": "windows-x64-msbuild",
-      "displayName": "x64 MSBuild",
+      "displayName": "windows-x64-msbuild",
       "inherits": "base-windows",
       "generator": "Visual Studio 17 2022",
       "architecture": {
@@ -67,7 +67,7 @@
     },
     {
       "name": "linux-x64-debug",
-      "displayName": "x64 Debug",
+      "displayName": "linux-x64-debug",
       "inherits": "base-linux",
       "generator": "Ninja",
       "architecture": {
@@ -80,7 +80,7 @@
     },
     {
       "name": "linux-x64-release",
-      "displayName": "x64 Release",
+      "displayName": "linux-x64-release",
       "inherits": "base-linux",
       "generator": "Ninja",
       "architecture": {
@@ -95,34 +95,34 @@
   "buildPresets": [
     {
       "name": "windows-x64-debug",
-      "displayName": "x64 Debug",
+      "displayName": "windows-x64-debug",
       "configurePreset": "windows-x64-debug"
     },
     {
       "name": "windows-x64-release",
-      "displayName": "x64 Release",
+      "displayName": "windows-x64-release",
       "configurePreset": "windows-x64-release"
     },
     {
       "name": "linux-x64-debug",
-      "displayName": "x64 Debug",
+      "displayName": "linux-x64-debug",
       "configurePreset": "linux-x64-debug"
     },
     {
       "name": "linux-x64-release",
-      "displayName": "x64 Release",
+      "displayName": "linux-x64-release",
       "configurePreset": "linux-x64-release"
     }
   ],
   "testPresets": [
     {
       "name": "windows-x64-debug",
-      "displayName": "Tests",
+      "displayName": "windows-x64-debug",
       "configurePreset": "windows-x64-debug"
     },
     {
-      "name": "windows-x64-debug",
-      "displayName": "Tests",
+      "name": "linux-x64-debug",
+      "displayName": "linux-x64-debug",
       "configurePreset": "linux-x64-debug"
     }
   ]
