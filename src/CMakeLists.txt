@@ -4,7 +4,7 @@
 #
 
 add_library(stuff
-    stuff.cpp
+    "adder.cpp"
 )
 
 target_include_directories(stuff PUBLIC
